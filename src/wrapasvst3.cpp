@@ -1179,9 +1179,7 @@ void ClapAsVst3::request_callback()
 
 void ClapAsVst3::restartPlugin()
 {
-  if (componentHandler)
-    componentHandler->restartComponent(Vst::RestartFlags::kIoChanged |
-                                       Vst::RestartFlags::kLatencyChanged);
+  _requestRestart = true;
 }
 
 void ClapAsVst3::onBeginEdit(clap_id id)
@@ -1322,6 +1320,14 @@ void ClapAsVst3::onIdle()
   {
     _requestUICallback = false;
     _plugin->_plugin->on_main_thread(_plugin->_plugin);
+  }
+
+  if (_requestRestart)
+  {
+    _requestRestart = false;
+    if (componentHandler)
+      componentHandler->restartComponent(Vst::RestartFlags::kIoChanged |
+                                         Vst::RestartFlags::kLatencyChanged);
   }
 
   if (_wrappedview)
