@@ -36,12 +36,11 @@
 
 #include "detail/os/osutil.h"
 #include "detail/vst3/plugview.h"
-#include "detail/vst3/process.h"
-#include "detail/vst3/aravst3.h"
 #include "detail/clap/automation.h"
 #include "detail/shared/fixedqueue.h"
-#include "detail/shared/spinlock.h"
 #include "detail/ara/ara.h"
+#include "detail/vst3/aravst3.h"
+#include "detail/shared/spinlock.h"
 #include <mutex>
 #include <thread>
 #include <atomic>
@@ -386,9 +385,9 @@ class ClapAsVst3 : public Steinberg::Vst::SingleComponentEffect,
   Clap::Library *_library = nullptr;
   int _libraryIndex = 0;
   std::shared_ptr<Clap::Plugin> _plugin;
-  clap_plugin_as_vst3_t *_vst3specifics = nullptr;
-  std::unique_ptr<Clap::ProcessAdapter> _processAdapter;
-  std::unique_ptr<WrappedView> _wrappedview;
+  clap_plugin_as_vst3_t* _vst3specifics = nullptr;
+  Clap::ProcessAdapter* _processAdapter = nullptr;
+  WrappedView* _wrappedview = nullptr;
 
   void *_creationcontext;  // context from the CLAP library
 
