@@ -100,7 +100,7 @@ function(target_add_vst3_wrapper)
 
         target_link_libraries(${V3_TARGET}-clap-wrapper-vst3-lib PUBLIC clap base-sdk-vst3)
 
-        if(NOT WINDOWS)
+        if(NOT WIN32)
           target_compile_options(${V3_TARGET}-clap-wrapper-vst3-lib PRIVATE -Wno-pragma-pack)
         endif()
 
